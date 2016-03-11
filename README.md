@@ -4,24 +4,27 @@
 thrift是一个软件框架，用来进行可扩展且跨语言的服务的开发。它结合了功能强大的软件堆栈和代码生成引擎，以构建在 C++, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#, Cocoa, JavaScript, Node.js, Smalltalk, and OCaml 这些编程语言间无缝结合的、高效的服务。
 ____  
 
-thrift最初由facebook开发，07年四月开放源码，08年5月进入apache孵化器。
+> thrift最初由facebook开发，07年四月开放源码，08年5月进入apache孵化器。
 thrift允许定义一个简单的定义文件中的数据类型和服务接口，以作为输入文件，编译器生成代码用来方便地生成RPC客户端和服务器通信的无缝跨编程语言。
 类似Thrift的工具，还有Avro、protocol buffer,但相对于Thrift来讲，都没有Thrift支持全面和使用广泛。
 Thrift自下到上可以分为4层
 Server(single-threaded, event-driven etc) 
 
-服务器进程调度
+> 服务器进程调度
 Processor(compiler generated)
 RPC接口处理函数分发，IDL定义接口的实现将挂接到这里面
 Protocol (JSON, compact etc)
 协议
 Transport(raw TCP, HTTP etc)
 
-网络传输
+____
+
+> 网络传输
 Thrift实际上是实现了C/S模式，通过代码生成工具将接口定义文件生成服务器端和客户端代码（可以为不同语言），从而实现服务端和客户端跨语言的支持。用户在Thirft描述文件中声明自己的服务，这些服务经过编译后会生成相应语言的代码文件，然后用户实现服务（客户端调用服务，服务器端提服务）便可以了。其中protocol（协议层, 定义数据传输格式，可以为二进制或者XML等）和transport（传输层，定义数据传输方式，可以为TCP/IP传输，内存共享或者文件共享等）被用作运行时库。 
 
+___
 
-Thrift支持的传输及服务模型
+> Thrift支持的传输及服务模型
 支持的传输格式：
 参数	描述
 TBinaryProtocol	二进制格式
@@ -31,7 +34,7 @@ TSimpleJSONProtocol	提供JSON只写协议, 生成的文件很容易通过脚本
 TDebugProtocol	使用易懂的可读的文本格式，以便于debug
  
  
-支持的数据传输方式：
+> 支持的数据传输方式：
 参数	描述
 TSocket	阻塞式socker
 TFramedTransport	以frame为单位进行传输，非阻塞式服务中使用。
@@ -39,13 +42,16 @@ TFileTransport	以文件形式进行传输。
 TMemoryTransport	将内存用于I/O. java实现时内部实际使用了简单的ByteArrayOutputStream。
 TZlibTransport	使用zlib进行压缩， 与其他传输方式联合使用。当前无java实现。
 
-支持的服务模型：
+____
+
+> 支持的服务模型：
 参数	描述
 TSimpleServer	简单的单线程服务模型，常用于测试
 TThreadPoolServer	多线程服务模型，使用标准的阻塞式IO。
 TNonblockingServer	多线程服务模型，使用非阻塞式IO（需使用TFramedTransport数据传输方式）
+____
 
-Thrift 下载及安装
+> Thrift 下载及安装
 如何获取Thrift
 官网：http://thrift.apache.org/
 golang的Thrift包:
@@ -61,7 +67,9 @@ Golang、PHP通过Thrift调用
 先发个官方各种语言DEMO地址 https://git1-us-west.apache.org/repos/asf?p=thrift.git;a=tree;f=tutorial;h=d69498f9f249afaefd9e6257b338515c0ea06390;hb=HEAD
 Thrift的协议库IDL文件
 
-语法参考
+____
+
+> 语法参考
 参考资料
 http://www.cnblogs.com/tianhuilove/archive/2011/09/05/2167669.html
 
@@ -101,7 +109,7 @@ struct Work {
   3: Operation op,
   4: optional string comment,
 }
-容器（Containers）
+> 容器（Containers）
 
 Thrift3种可用容器类型：
 
@@ -149,6 +157,7 @@ thrift -r --gen go batu.thrift
 thrift -r --gen php batu.thrift  
 thrift -r --gen php:server batu.thrift #生成PHP服务端接口代码有所不一样
 
+____
 
 Golang Service 实现
 先按照golang的Thrift包
@@ -278,7 +287,6 @@ func main() {
 func currentTimeMillis() int64 {
     return time.Now().UnixNano() / 1000000
 }
-
 ```  
 
 ``` 
